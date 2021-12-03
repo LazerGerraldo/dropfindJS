@@ -17,7 +17,7 @@ boxDimen = 650 # size of the cropping box
 
 #pass the function an image using format image = cv2.imread('filename')
 def Crop(img):
-    print(img.shape) # Print image shape
+    # print(img.shape) # Print image shape
     cv2.imshow("original", img)
 
     startRow = (img.shape[0] - boxDimen) // 2
@@ -31,7 +31,7 @@ def Crop(img):
     return cropped_image
 
 # Read in each image and convert to grayscale
-images = [cv2.imread(file,0) for file in glob.glob("Example2/*.jpg")]
+images = [cv2.imread(file,0) for file in sorted(glob.glob("Example2/*.jpg"))]
 
 # Iterate through each image, perform edge detection, and save image
 number = 0

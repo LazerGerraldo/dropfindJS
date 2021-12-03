@@ -19,15 +19,16 @@ def auto_canny(image, sigma=0.33):
 	return edged
 
 # construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--images", required=True,
-	help="path to input dataset of images")
-args = vars(ap.parse_args())
+# ap = argparse.ArgumentParser()
+# ap.add_argument("-i", "--images", required=True,
+# 	help="path to input dataset of images")
+# args = vars(ap.parse_args())
+
+images = [cv2.imread(file,0) for file in glob.glob('Cropped/*.png')]
 
 # loop over the images
-for imagePath in glob.glob(args["images"] + "Example1/*.jpg"):
+for image in images:
 	# load the image, convert it to grayscale, and blur it slightly
-	image = cv2.imread(imagePath)
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	blurred = cv2.GaussianBlur(gray, (3, 3), 0)
 
