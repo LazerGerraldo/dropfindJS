@@ -16,7 +16,7 @@ procesdVals = []                        # temp array values for standard deviait
 avgProcessed = []                       # array of mean values of processed photos
 stdProcessed = []                       # array of standard deviation values of processed photos
 boxDimen = 494                          # dimension of the cropping box
-sourceDir = 'C:/Users/jamie/OneDrive/Shared_Files_Jan_Sci/Autofocus Images/J000972_AF_Temp/Set1'            # photo source folder end in '/'
+sourceDir = 'C:/Users/jamie/OneDrive/Shared_Files_Jan_Sci/Autofocus Images/J000972_AF_Temp/Set1/'            # photo source folder end in '/'
 croppedDir = sourceDir + 'Cropped/cropped_{}.png'      # folder for cropped photos to be saved
 processedDir = sourceDir + 'Processed/edge_{}.png' # folder for processed photos to be saved 
 
@@ -89,6 +89,7 @@ def renamecheck():
             renamefile.close()
         else:
             print('Not renaming images, unable to sort')
+
 # plots values of processed images in a simple graph
 def plottr(vals):
     global sourceDir
@@ -109,8 +110,6 @@ def csvFile(vals, filename):
 
     excl.close()
 
-
-
 # checks existence of Cropped/ and Processed/ folders creates if nessary
 def startup():
     # Create cropped and processed folders for images to be saved in
@@ -121,7 +120,7 @@ def startup():
         os.mkdir(sourceDir + 'Processed/')
         print('Processed folder did not exist, creating.........')
 
-    renamecheck()                                   # checks if images have been renamed, renames if nessary
+    # renamecheck()                                   # checks if images have been renamed, renames if necessary
 
 
 def main():
@@ -129,8 +128,17 @@ def main():
     print('---------- running startup ---------')
     startup() # checking existence of folders and correct naming
     
+    # read in list of image names and sort them
+    filesorted = glob.glob(sourceDir)
+    # sort using the integer before jpg in the last 6 chars. ex. A00_00_5.jpg returns 5. see jpgsorting.py
+    filesorted = filesorted.sort(key=lambda f: int(re.search(r'\d+', f[len(f)-6:]).group())) 
+    # [print(x) for x in filesorted]
+     
+    # TODO don't import all images at once. Instead for each loop
+    # convert to grayscale, process, get a value and send the photo ID with the value to csv
     # read in each image and convert to grayscale
     images = [cv2.imread(file,cv2.IMREAD_GRAYSCALE) for file in glob.glob(sourceDir+'*.jpg')]
+    # print(images)
 
     # iterate through each image, perform edge detection, and save image
     number = 0
