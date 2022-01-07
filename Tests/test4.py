@@ -14,6 +14,5 @@ for x in flist:
 flist.sort(key=lambda f: int(re.search(r'\d+', f[len(f)-6:]).group()))
 #----------DO NOT DELETE--------------------------------------------------------------
 print('sorted list')
-for x in flist:
-    print(x)
-
+for y in flist:
+    print(y)
